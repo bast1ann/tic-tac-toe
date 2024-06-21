@@ -1,4 +1,4 @@
-const board = function() {
+const gameboard = function() {
   const board = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ];
 
   function displayBoard() {
@@ -41,7 +41,7 @@ const board = function() {
 
 const gameController = (function() {
   // initial state
-  const board = board();
+  const board = gameboard();
   const playerOne = createPlayer("Player One", 1);
   const playerTwo = createPlayer("Player Two", 2);
   let activePlayer = playerOne;
