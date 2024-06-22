@@ -42,23 +42,26 @@ const gameboard = function() {
 const gameController = (function() {
   // initial state
   const board = gameboard();
-  const playerOne = createPlayer("Player One", 1);
-  const playerTwo = createPlayer("Player Two", 2);
+  const playerOne = createPlayer("Computer 1", 1);
+  const playerTwo = createPlayer("Computer 2", 2);
   let activePlayer = playerOne;
 
   // functions
   function createPlayer(name, symbol) {
+    let score = 0;
     const getName = () => name;
     const getSymbol = () => symbol;
+    const addScore = () => score++;
+    const getScore = () => score;
     
-    return {getName, getSymbol};
+    return {getName, getSymbol, getScore, addScore};
   }
 
   function switchPlayer() {
     activePlayer === playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
   }
 
-  function checkWinner(symbol) {
+  function checkWinner(board, symbol) {
     // check row winner
     for (let row = 0; row < 3; row++) {
       let counter = 0;
@@ -94,16 +97,17 @@ const gameController = (function() {
     }
   }
 
-  function playRound() {
-    // get play
-    const [rowPlay, colPlay] = [prompt("Row:"), prompt("Col:")];
+  function playRound(row, col) {
     // check if the cell is empty for the given play
-    if (board.checkEmptyCell(rowPlay, colPlay)) {
-      board.writeBoard(rowPlay, colPlay, activePlayer.getSymbol());
+    if (board.checkEmptyCell(row, col)) {
+      board.writeBoard(row, col, activePlayer.getSymbol());
       board.displayBoard();
       // check winner or tie
       if (checkWinner(board.getBoard(), activePlayer.getSymbol())) {
+        activePlayer.addScore();
+        board.resetBoard();
         console.log(`The winner is ${activePlayer.getName()}!`);
+        console.log(`${playerOne.getName()} (${playerOne.getScore()}) - (${playerTwo.getScore()}) ${playerTwo.getName()}`);
         // show Modal Dialog and reset button
       }
       else if (board.checkFullBoard()) {
