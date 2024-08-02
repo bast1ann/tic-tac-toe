@@ -15,3 +15,51 @@ body {
 input, button, textarea, select {
   font: inherit;
 }
+/* reset */
+
+div {
+  border: 1px solid black;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 1.5rem;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-size: 2rem;
+}
+
+.scoreboard div {
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0 10px;
+  margin: 0 50px;
+}
+
+.text-screen {
+  text-align: center;
+  padding: 5px;
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(3, 120px);
+  grid-template-columns: repeat(3, 120px);
+  justify-content: center;
+  padding: 50px;
+}
+
+.board div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.5rem;
+}

@@ -1,4 +1,4 @@
-const gameboard = function() {
+const gameboard = (function() {
   const board = [ [0, 0, 0], [0, 0, 0], [0, 0, 0] ];
 
   function displayBoard() {
@@ -37,11 +37,10 @@ const gameboard = function() {
   }
 
   return {displayBoard, checkEmptyCell, checkFullBoard, getBoard, resetBoard, writeBoard};
-};
+})();
 
 const gameController = (function() {
   // initial state
-  const board = gameboard();
   const playerOne = createPlayer("Computer 1", 1);
   const playerTwo = createPlayer("Computer 2", 2);
   let activePlayer = playerOne;
@@ -99,18 +98,18 @@ const gameController = (function() {
 
   function playRound(row, col) {
     // check if the cell is empty for the given play
-    if (board.checkEmptyCell(row, col)) {
-      board.writeBoard(row, col, activePlayer.getSymbol());
-      board.displayBoard();
+    if (gameboard.checkEmptyCell(row, col)) {
+      gameboard.writeBoard(row, col, activePlayer.getSymbol());
+      gameboard.displayBoard();
       // check winner or tie
-      if (checkWinner(board.getBoard(), activePlayer.getSymbol())) {
+      if (checkWinner(gameboard.getBoard(), activePlayer.getSymbol())) {
         activePlayer.addScore();
-        board.resetBoard();
+        gameboard.resetBoard();
         console.log(`The winner is ${activePlayer.getName()}!`);
         console.log(`${playerOne.getName()} (${playerOne.getScore()}) - (${playerTwo.getScore()}) ${playerTwo.getName()}`);
         // show Modal Dialog and reset button
       }
-      else if (board.checkFullBoard()) {
+      else if (gameboard.checkFullBoard()) {
         console.log("It's a tie!");
         // show Modal Dialog and reset button
       }
