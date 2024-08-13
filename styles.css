@@ -62,4 +62,10 @@ div {
   justify-content: center;
   align-items: center;
   font-size: 3.5rem;
+  cursor: pointer;
+}
+
+.board div:hover {
+  background-color: rgb(255, 61, 61);
+  color: white;
 }
