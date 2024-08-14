@@ -1,4 +1,4 @@
-const gameboard = (function() {
+const gameboard = function() {
   const board = [ ["", "", ""], ["", "", ""], ["", "", ""] ];
 
   function checkEmptyCell(row, col) {
@@ -31,10 +31,11 @@ const gameboard = (function() {
   }
 
   return {checkEmptyCell, checkFullBoard, getBoard, resetBoard, writeBoard};
-})();
+};
 
 const gameController = (function() {
   // initial state
+  const board = gameboard();
   const playerOne = createPlayer("Computer 1", "X");
   const playerTwo = createPlayer("Computer 2", "O");
   let activePlayer = playerOne;
@@ -101,16 +102,16 @@ const gameController = (function() {
 
   function playRound(row, col) {
     // check if the cell is empty for the given play
-    if (gameboard.checkEmptyCell(row, col)) {
-      gameboard.writeBoard(row, col, activePlayer.getSymbol());
+    if (board.checkEmptyCell(row, col)) {
+      board.writeBoard(row, col, activePlayer.getSymbol());
       // check winner or tie
-      if (checkWinner(gameboard.getBoard(), activePlayer.getSymbol())) {
+      if (checkWinner(board.getBoard(), activePlayer.getSymbol())) {
         activePlayer.addScore();
-        gameboard.resetBoard();
+        board.resetBoard();
         message = `${activePlayer.getName()} wins this round!`;
       }
-      else if (gameboard.checkFullBoard()) {
-        gameboard.resetBoard();
+      else if (board.checkFullBoard()) {
+        board.resetBoard();
         message = `It's a tie!`;
       }
       else {
@@ -126,6 +127,7 @@ const gameController = (function() {
   return {playRound,
           getActivePlayer,
           getMessage,
+          getBoard : board.getBoard,
           playerOne : {getName : playerOne.getName, getScore : playerOne.getScore},
           playerTwo : {getName : playerTwo.getName, getScore : playerTwo.getScore}};
 })();
@@ -150,7 +152,7 @@ const gameUI = (function() {
 
   function updateScreen() {
     cell.forEach( (el) => {
-      el.textContent = gameboard.getBoard()[el.dataset.row][el.dataset.col];
+      el.textContent = gameController.getBoard()[el.dataset.row][el.dataset.col];
     } );
     playerOneScore.textContent = gameController.playerOne.getScore();
     playerTwoScore.textContent = gameController.playerTwo.getScore();
