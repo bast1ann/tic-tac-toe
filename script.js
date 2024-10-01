@@ -40,6 +40,7 @@ const gameController = (function() {
   const playerTwo = createPlayer("Computer 2", "O");
   let activePlayer = playerOne;
   let message = "";
+  let boardActive = true;
 
   // functions
   function createPlayer(name, symbol) {
@@ -101,17 +102,23 @@ const gameController = (function() {
   }
 
   function playRound(row, col) {
+    if (!boardActive) {
+      boardActive = true;
+      board.resetBoard();
+      message = `It's ${activePlayer.getName()} turn.`;
+      return;
+    }
     // check if the cell is empty for the given play
     if (board.checkEmptyCell(row, col)) {
       board.writeBoard(row, col, activePlayer.getSymbol());
       // check winner or tie
       if (checkWinner(board.getBoard(), activePlayer.getSymbol())) {
         activePlayer.addScore();
-        board.resetBoard();
+        boardActive = false;
         message = `${activePlayer.getName()} wins this round!`;
       }
       else if (board.checkFullBoard()) {
-        board.resetBoard();
+        boardActive = false;
         message = `It's a tie!`;
       }
       else {
