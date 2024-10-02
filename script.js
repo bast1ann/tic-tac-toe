@@ -39,6 +39,7 @@ const gameController = (function() {
   const playerOne = createPlayer("Computer 1", "X");
   const playerTwo = createPlayer("Computer 2", "O");
   let activePlayer = playerOne;
+  let firstTurn = playerOne;
   let message = "";
   let boardActive = true;
 
@@ -116,10 +117,18 @@ const gameController = (function() {
         activePlayer.addScore();
         boardActive = false;
         message = `${activePlayer.getName()} wins this round!`;
+        if (firstTurn === activePlayer) {
+          switchPlayer();
+          firstTurn = activePlayer;
+        }
       }
       else if (board.checkFullBoard()) {
         boardActive = false;
         message = `It's a tie!`;
+        if (firstTurn === activePlayer) {
+          switchPlayer();
+          firstTurn = activePlayer;
+        }
       }
       else {
         switchPlayer();
