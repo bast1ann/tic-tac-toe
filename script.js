@@ -36,11 +36,11 @@ const gameboard = function() {
 const gameController = (function() {
   // initial state
   const board = gameboard();
-  const playerOne = createPlayer("Computer 1", "X");
-  const playerTwo = createPlayer("Computer 2", "O");
+  const playerOne = createPlayer("Goku", "X");
+  const playerTwo = createPlayer("Vegeta", "O");
   let activePlayer = playerOne;
   let firstTurn = playerOne;
-  let message = "";
+  let message = `It's ${activePlayer.getName()}'s turn.`;
   let boardActive = true;
 
   // functions
@@ -155,9 +155,13 @@ const gameUI = (function() {
   const playerOneScore = document.querySelector(".score-player-one");
   const playerTwoScore = document.querySelector(".score-player-two");
   const message = document.getElementById("message");
+  const configMenu = document.getElementById("config-menu");
+  const configButton = document.getElementById("config-button");
+  const startButton = document.getElementById("start-button");
 
   playerOneName.textContent = gameController.playerOne.getName();
   playerTwoName.textContent = gameController.playerTwo.getName();
+  message.textContent = gameController.getMessage();
 
   cell.forEach( (el) => el.addEventListener("click", () => {
     const row = parseInt(el.dataset.row);
@@ -165,6 +169,8 @@ const gameUI = (function() {
     gameController.playRound(row, col);
     updateScreen();
   }) );
+
+  configButton.addEventListener("click", () => configMenu.showModal());
 
   function updateScreen() {
     cell.forEach( (el) => {
