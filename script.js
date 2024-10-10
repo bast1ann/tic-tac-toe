@@ -1,12 +1,12 @@
-const gameboard = function() {
-  const board = [ ["", "", ""], ["", "", ""], ["", "", ""] ];
+const gameboard = function () {
+  const board = [["", "", ""], ["", "", ""], ["", "", ""]];
 
   function checkEmptyCell(row, col) {
     return (board[row][col] === "" ? true : false);
   }
 
   function checkFullBoard() {
-    for (let row = 0; row < 3 ; row++) {
+    for (let row = 0; row < 3; row++) {
       for (let col = 0; col < 3; col++) {
         if (board[row][col] === "") {
           return false;
@@ -30,10 +30,21 @@ const gameboard = function() {
     }
   }
 
-  return {checkEmptyCell, checkFullBoard, getBoard, resetBoard, writeBoard};
+  return { checkEmptyCell, checkFullBoard, getBoard, resetBoard, writeBoard };
 };
 
-const gameController = (function() {
+function createPlayer(name, symbol) {
+  let score = 0;
+  const getName = () => name;
+  const getSymbol = () => symbol;
+  const addScore = () => score++;
+  const getScore = () => score;
+  const changeName = (newName) => name = newName;
+
+  return { getName, getSymbol, getScore, addScore, changeName };
+};
+
+const gameController = function () {
   // initial state
   const board = gameboard();
   const playerOne = createPlayer("Goku", "X");
@@ -44,16 +55,6 @@ const gameController = (function() {
   let boardActive = true;
 
   // functions
-  function createPlayer(name, symbol) {
-    let score = 0;
-    const getName = () => name;
-    const getSymbol = () => symbol;
-    const addScore = () => score++;
-    const getScore = () => score;
-    
-    return {getName, getSymbol, getScore, addScore};
-  }
-
   function getActivePlayer() {
     return activePlayer.getName();
   }
@@ -72,7 +73,7 @@ const gameController = (function() {
       let counter = 0;
       for (let col = 0; col < 3; col++) {
         if (board[row][col] === symbol) {
-          counter+= 1;
+          counter += 1;
         }
       }
       if (counter == 3) {
@@ -84,7 +85,7 @@ const gameController = (function() {
       let counter = 0;
       for (let row = 0; row < 3; row++) {
         if (board[row][col] === symbol) {
-          counter+= 1;
+          counter += 1;
         }
       }
       if (counter == 3) {
@@ -92,12 +93,12 @@ const gameController = (function() {
       }
     }
     // check diagonal winner
-    if ( ((symbol === board[0][0])
-    && (board[0][0] === board[1][1])
-    && (board[1][1] === board[2][2]))
-    || ((symbol === board[2][0])
-    && (board[2][0] === board[1][1])
-    && (board[1][1] === board[0][2])) ) {
+    if (((symbol === board[0][0])
+      && (board[0][0] === board[1][1])
+      && (board[1][1] === board[2][2]))
+      || ((symbol === board[2][0])
+        && (board[2][0] === board[1][1])
+        && (board[1][1] === board[0][2]))) {
       return true;
     }
   }
@@ -140,15 +141,19 @@ const gameController = (function() {
     }
   }
 
-  return {playRound,
-          getActivePlayer,
-          getMessage,
-          getBoard : board.getBoard,
-          playerOne : {getName : playerOne.getName, getScore : playerOne.getScore},
-          playerTwo : {getName : playerTwo.getName, getScore : playerTwo.getScore}};
-})();
+  return {
+    playRound,
+    getActivePlayer,
+    getMessage,
+    getBoard: board.getBoard,
+    playerOne: { getName: playerOne.getName, getScore: playerOne.getScore },
+    playerTwo: { getName: playerTwo.getName, getScore: playerTwo.getScore }
+  };
+};
 
-const gameUI = (function() {
+const gameUI = (function () {
+  const game = gameController();
+  
   const cell = document.querySelectorAll(".cell");
   const playerOneName = document.querySelector(".player-one-name");
   const playerTwoName = document.querySelector(".player-two-name");
@@ -159,26 +164,26 @@ const gameUI = (function() {
   const configButton = document.getElementById("config-button");
   const startButton = document.getElementById("start-button");
 
-  playerOneName.textContent = gameController.playerOne.getName();
-  playerTwoName.textContent = gameController.playerTwo.getName();
-  message.textContent = gameController.getMessage();
+  playerOneName.textContent = game.playerOne.getName();
+  playerTwoName.textContent = game.playerTwo.getName();
+  message.textContent = game.getMessage();
 
-  cell.forEach( (el) => el.addEventListener("click", () => {
+  cell.forEach((el) => el.addEventListener("click", () => {
     const row = parseInt(el.dataset.row);
     const col = parseInt(el.dataset.col);
-    gameController.playRound(row, col);
+    game.playRound(row, col);
     updateScreen();
-  }) );
+  }));
 
   configButton.addEventListener("click", () => configMenu.showModal());
 
   function updateScreen() {
-    cell.forEach( (el) => {
-      el.textContent = gameController.getBoard()[el.dataset.row][el.dataset.col];
-    } );
-    playerOneScore.textContent = gameController.playerOne.getScore();
-    playerTwoScore.textContent = gameController.playerTwo.getScore();
-    message.textContent = gameController.getMessage();
+    cell.forEach((el) => {
+      el.textContent = game.getBoard()[el.dataset.row][el.dataset.col];
+    });
+    playerOneScore.textContent = game.playerOne.getScore();
+    playerTwoScore.textContent = game.playerTwo.getScore();
+    message.textContent = game.getMessage();
   }
 
 })();
