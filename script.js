@@ -146,14 +146,14 @@ const gameController = function () {
     getActivePlayer,
     getMessage,
     getBoard: board.getBoard,
-    playerOne: { getName: playerOne.getName, getScore: playerOne.getScore },
-    playerTwo: { getName: playerTwo.getName, getScore: playerTwo.getScore }
+    playerOne: { getName: playerOne.getName, getScore: playerOne.getScore, changeName: playerOne.changeName },
+    playerTwo: { getName: playerTwo.getName, getScore: playerTwo.getScore, changeName: playerTwo.changeName }
   };
 };
 
 const gameUI = (function () {
   const game = gameController();
-  
+
   const cell = document.querySelectorAll(".cell");
   const playerOneName = document.querySelector(".player-one-name");
   const playerTwoName = document.querySelector(".player-two-name");
@@ -161,8 +161,9 @@ const gameUI = (function () {
   const playerTwoScore = document.querySelector(".score-player-two");
   const message = document.getElementById("message");
   const configMenu = document.getElementById("config-menu");
-  const configButton = document.getElementById("config-button");
-  const startButton = document.getElementById("start-button");
+  const startButton = document.getElementById("submit");
+
+  configMenu.showModal();
 
   playerOneName.textContent = game.playerOne.getName();
   playerTwoName.textContent = game.playerTwo.getName();
@@ -175,7 +176,25 @@ const gameUI = (function () {
     updateScreen();
   }));
 
-  configButton.addEventListener("click", () => configMenu.showModal());
+  // configButton.addEventListener("click", () => configMenu.showModal());
+
+  startButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const form = document.querySelector("#config-menu form");
+    const newNameOne = document.getElementById("player-one");
+    const newNameTwo = document.getElementById("player-two");
+
+    if (form.reportValidity()) {
+      game.playerOne.changeName(newNameOne.value);
+      game.playerTwo.changeName(newNameTwo.value);
+      playerOneName.textContent = game.playerOne.getName();
+      playerTwoName.textContent = game.playerTwo.getName();
+      message.textContent = `It's ${game.getActivePlayer()}'s turn.`;
+
+      configMenu.close();
+    }
+  });
 
   function updateScreen() {
     cell.forEach((el) => {
