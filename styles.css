@@ -1,5 +1,7 @@
 /* reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -12,25 +14,78 @@ body {
   line-height: 1.5;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
-/* reset */
 
-div {
-  border: 1px solid black;
+/* fonts */
+@font-face {
+  font-family: 'amatic_scregular';
+  src: url('./fonts/amaticsc-regular-webfont.woff2') format('woff2'),
+    url('./fonts/amaticsc-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.title {
-  text-align: center;
-  font-size: 2rem;
-  letter-spacing: 1.5rem;
+@font-face {
+  font-family: 'latoregular';
+  src: url('./fonts/lato-regular-webfont.woff2') format('woff2'),
+    url('./fonts/lato-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.scoreboard {
+/* general */
+body {
+  font-family: "Courier New", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: rgb(245, 245, 245);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header,
+.footer,
+.scoreboard,
+.board div {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.header {
+  font-size: 2rem;
+  letter-spacing: 1.8rem;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.9);
+  font-family: 'amatic_scregular';
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  background-color: rgb(0, 0, 0, 0.9);
+  color: white;
+  font-size: 1.3rem;
+  height: 70px;
+  flex-direction: column;
+}
+
+.footer a {
+  text-decoration: none;
+  color: rgb(0, 217, 255);
+}
+
+.footer a:hover {
+  color: rgb(255, 38, 0);
+}
+
+.scoreboard {
   padding: 20px;
   font-size: 2rem;
 }
@@ -47,6 +102,7 @@ div {
   padding: 5px;
   font-size: 1.5rem;
   font-style: italic;
+  min-height: 50px;
 }
 
 .board {
@@ -58,14 +114,48 @@ div {
 }
 
 .board div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 3.5rem;
   cursor: pointer;
+  border: 1px solid black;
 }
 
 .board div:hover {
   background-color: rgb(255, 61, 61);
   color: white;
+}
+
+/* modal */
+
+:modal {
+  margin: auto;
+  border-radius: 10px;
+  border: 2px solid grey;
+  /* border: none; */
+}
+
+:modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* form */
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+form input {
+  width: 100%;
+  padding: 5px;
+  font-size: 1.1rem;
+  border: 1px solid grey;
+  outline: none;
+}
+
+#submit {
+  width: 40%;
+  padding: 4px;
 }

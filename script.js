@@ -45,10 +45,10 @@ function createPlayer(name, symbol) {
 };
 
 const gameController = function () {
-  // initial state
+  // initial stat
   const board = gameboard();
-  const playerOne = createPlayer("Goku", "X");
-  const playerTwo = createPlayer("Vegeta", "O");
+  const playerOne = createPlayer("Player 1", "✗");
+  const playerTwo = createPlayer("Player 2", "❍");
   let activePlayer = playerOne;
   let firstTurn = playerOne;
   let message = `It's ${activePlayer.getName()}'s turn.`;
@@ -165,18 +165,12 @@ const gameUI = (function () {
 
   configMenu.showModal();
 
-  playerOneName.textContent = game.playerOne.getName();
-  playerTwoName.textContent = game.playerTwo.getName();
-  message.textContent = game.getMessage();
-
   cell.forEach((el) => el.addEventListener("click", () => {
     const row = parseInt(el.dataset.row);
     const col = parseInt(el.dataset.col);
     game.playRound(row, col);
     updateScreen();
   }));
-
-  // configButton.addEventListener("click", () => configMenu.showModal());
 
   startButton.addEventListener("click", (event) => {
     event.preventDefault();
