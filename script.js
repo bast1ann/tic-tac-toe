@@ -70,6 +70,10 @@ const gameController = function () {
     activePlayer === playerOne ? activePlayer = playerTwo : activePlayer = playerOne;
   }
 
+  function switchFirstTurn() {
+    firstTurn === playerOne ? firstTurn = playerTwo : firstTurn = playerOne;
+  };
+
   function checkWinner(board, symbol) {
     // check row winner
     for (let row = 0; row < 3; row++) {
@@ -121,18 +125,14 @@ const gameController = function () {
         activePlayer.addScore();
         boardActive = false;
         message = `${activePlayer.getName()} wins this round!`;
-        if (firstTurn === activePlayer) {
-          switchPlayer();
-          firstTurn = activePlayer;
-        }
+        switchFirstTurn();
+        activePlayer = firstTurn;
       }
       else if (board.checkFullBoard()) {
         boardActive = false;
         message = `It's a tie!`;
-        if (firstTurn === activePlayer) {
-          switchPlayer();
-          firstTurn = activePlayer;
-        }
+        switchFirstTurn();
+        activePlayer = firstTurn;
       }
       else {
         switchPlayer();
