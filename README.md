@@ -3,7 +3,7 @@ This project is part from [The Odin Project](https://www.theodinproject.com/less
 
 I'm gonna build a Tic Tac Toe Game that can be played from a web browser. The main goal is to organize the code, having as little global code as possible and use the design patterns learned in the last lesson of the course.
 
-## LIVE PREVIEW
+## [LIVE PREVIEW](https://bast1ann.github.io/tic-tac-toe/)
 
 ## Key Objectives
 * Apply concepts on scoping, closures, factory functions and module patterns to organize the code.
