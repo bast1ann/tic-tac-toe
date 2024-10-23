@@ -114,7 +114,7 @@ const gameController = function () {
     if (!boardActive) {
       boardActive = true;
       board.resetBoard();
-      message = `It's ${activePlayer.getName()} turn.`;
+      message = `It's ${activePlayer.getName()}'s turn.`;
       return;
     }
     // check if the cell is empty for the given play
@@ -136,7 +136,7 @@ const gameController = function () {
       }
       else {
         switchPlayer();
-        message = `It's ${activePlayer.getName()} turn.`;
+        message = `It's ${activePlayer.getName()}'s turn.`;
       }
     }
     else {
@@ -205,7 +205,6 @@ const gameUI = (function () {
     game.playerTwo.resetScore();
     game.resetBoard();
     updateScreen();
-    console.log("hi");
   });
 
   function updateScreen() {
