@@ -129,7 +129,6 @@ body {
   margin: auto;
   border-radius: 10px;
   border: 2px solid grey;
-  /* border: none; */
 }
 
 :modal::backdrop {

@@ -48,7 +48,6 @@ function createPlayer(name, symbol) {
 };
 
 const gameController = function () {
-  // initial stat
   const board = gameboard();
   const playerOne = createPlayer("Player 1", "✗");
   const playerTwo = createPlayer("Player 2", "❍");
@@ -191,7 +190,6 @@ const gameUI = (function () {
       playerOneName.textContent = game.playerOne.getName();
       playerTwoName.textContent = game.playerTwo.getName();
       message.textContent = `It's ${game.getActivePlayer()}'s turn.`;
-
       configMenu.close();
     }
   });
@@ -215,6 +213,5 @@ const gameUI = (function () {
     playerTwoScore.textContent = game.playerTwo.getScore();
     message.textContent = game.getMessage();
   }
-
 })();
 
