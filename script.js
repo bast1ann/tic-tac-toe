@@ -40,8 +40,11 @@ function createPlayer(name, symbol) {
   const addScore = () => score++;
   const getScore = () => score;
   const changeName = (newName) => name = newName;
+  const resetScore = function() {
+    score = 0;
+  };
 
-  return { getName, getSymbol, getScore, addScore, changeName };
+  return { getName, getSymbol, getScore, addScore, changeName, resetScore };
 };
 
 const gameController = function () {
@@ -146,8 +149,9 @@ const gameController = function () {
     getActivePlayer,
     getMessage,
     getBoard: board.getBoard,
-    playerOne: { getName: playerOne.getName, getScore: playerOne.getScore, changeName: playerOne.changeName },
-    playerTwo: { getName: playerTwo.getName, getScore: playerTwo.getScore, changeName: playerTwo.changeName }
+    resetBoard: board.resetBoard,
+    playerOne: { getName: playerOne.getName, getScore: playerOne.getScore, changeName: playerOne.changeName, resetScore: playerOne.resetScore },
+    playerTwo: { getName: playerTwo.getName, getScore: playerTwo.getScore, changeName: playerTwo.changeName, resetScore: playerTwo.resetScore }
   };
 };
 
@@ -162,6 +166,8 @@ const gameUI = (function () {
   const message = document.getElementById("message");
   const configMenu = document.getElementById("config-menu");
   const startButton = document.getElementById("submit");
+  const configButton = document.getElementById("config-button");
+  const resetButton = document.getElementById("reset-button");
 
   configMenu.showModal();
 
@@ -188,6 +194,18 @@ const gameUI = (function () {
 
       configMenu.close();
     }
+  });
+
+  configButton.addEventListener("click", () => {
+    configMenu.showModal();
+  });
+
+  resetButton.addEventListener("click", () => {
+    game.playerOne.resetScore();
+    game.playerTwo.resetScore();
+    game.resetBoard();
+    updateScreen();
+    console.log("hi");
   });
 
   function updateScreen() {

@@ -42,7 +42,8 @@ body {
 .header,
 .footer,
 .scoreboard,
-.board div {
+.board div,
+.buttons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,6 +59,14 @@ body {
 
 .content {
   flex: 1;
+}
+
+.buttons {
+  gap: 50px;
+}
+
+.buttons button {
+  padding: 4px;
 }
 
 .footer {
