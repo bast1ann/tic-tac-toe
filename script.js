@@ -168,6 +168,7 @@ const gameUI = (function () {
   const configButton = document.getElementById("config-button");
   const resetButton = document.getElementById("reset-button");
 
+  message.textContent = game.getMessage();
   configMenu.showModal();
 
   cell.forEach((el) => el.addEventListener("click", () => {
